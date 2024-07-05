@@ -8,5 +8,12 @@
     <select id="selectBoardById" resultType="board" parameterType="String">
     	select * from board where board_id = #{board_id}
     </select>
+    <update id="uptBoard" parameterType="board">
+		update board 
+			set title = #{title},    
+				detail = #{detail},
+				upt_date = sysdate
+			where board_id = #{board_id}
+    </update>
 
 </mapper>

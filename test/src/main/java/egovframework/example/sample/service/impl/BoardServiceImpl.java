@@ -27,5 +27,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
     public BoardVO selectBoardById(String board_id) throws Exception {
     	return dao.selectBoardById(board_id);
     }
+    @Override
+    public int uptBoard(BoardVO vo) throws Exception {
+    	return dao.uptBoard(vo);
+    }
    
 }
