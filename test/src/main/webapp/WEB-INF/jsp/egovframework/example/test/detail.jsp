@@ -1,81 +1,118 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<c:set var="path" value="${pageContext.request.contextPath }" />
-<fmt:requestEncoding value="utf-8" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<jsp:include page="top.jsp" flush="true" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>테스트 페이지</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-.fakeimg {
-	height: 200px;
-	background: #aaa;
-}
-</style>
+<meta charset="UTF-8">
+<title>Main Page</title>
 </head>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#uptBtn").click(function() {
+			if (confirm("수정하시겠습니까?")) {
+				uptData();
+			} else {
+				alert("수정 취소")
+			}
+		});
+		
+		$("#delBtn").click(function() {
+			if (confirm("삭제하시겠습니까?")) {
+				delData();
+			} else {
+				alert("수정 취소")
+			}
+		});
+	});
+	// 수정 함수
+	function uptData() {
+		var formData = $("#frm").serialize();
+		console.log(formData); // 디버깅을 위해 데이터를 출력합니다.
+
+		$.ajax({
+			url : "${path}/test/uptBoard.do",
+			type : "POST",
+			data : formData,
+			dataType : "json",
+			success : function(response) {
+				if (response == 1) {
+					alert("수정 완료")
+					location.href = "${path}/test/board.do"
+				} else {
+					alert("수정 에러")
+				}
+
+			},
+			error : function(err) {
+				console.error("수정 실패:", err);
+				alert("수정 중 오류가 발생했습니다.");
+			}
+		});
+	}
+	// 삭제함수
+	function delData() {
+		$.ajax({
+			url : "${path}/test/delBoard.do?board_id=" + $("#board_id").val(),
+			type : "get",
+			dataType : "json",
+			success : function(response) {
+				if (response == 1) {
+					alert("삭제 완료")
+					location.href = "${path}/test/board.do"
+				} else {
+					alert("삭제 에러")
+				}
+
+			},
+			error : function(err) {
+				console.error("삭제 실패:", err);
+				alert("삭제 중 오류가 발생했습니다.");
+			}
+		})
+	}
+</script>
 <body>
-
-	<div class="jumbotron text-center" style="margin-bottom: 0">
-		<h1>My First Bootstrap 4 Page</h1>
-		<p>Resize this responsive page to see the effect!</p>
-	</div>
-
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<a class="navbar-brand" href="${path}/main.do">메인</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="${path}/board.do">게시판</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">뉴스레터</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">메일</a></li>
-			</ul>
-		</div>
-	</nav>
 	<!-- 게시판 상세 -->
 	<div class="container" style="margin: 2%; width: 100%; max-width: 95%;">
 		<h2>게시물 상세보기</h2>
-		<form >
+		<form id="frm">
+			<input type="hidden" name="board_id" id="board_id"
+				value="${detail.board_id}">
 			<div class="form-group">
-				<label for="title">제목</label> 
-				<input type="text" class="form-control" id="title" value="${detail.title}"
+				<label for="title">제목</label> <input type="text"
+					class="form-control" id="title" value="${detail.title}"
 					name="title">
 			</div>
-			
+
 			<div class="form-group">
 				<label for="writter">작성자</label> <input type="text"
 					class="form-control" id="writter" value="${detail.writter}"
 					name="writter">
 			</div>
-			
+
 			<div class="form-group">
-				<label for="reg_date">등록일</label> <input type="text" value="${detail.reg_date}"
-					class="form-control" id="reg_date" placeholder="Enter password"
-					name="reg_date">
+				<label for="reg_date">등록일</label> <input type="text"
+					value="${detail.reg_date}" class="form-control" id="reg_date"
+					placeholder="Enter password">
 			</div>
-			
+
 			<div class="form-group">
-			  <label for="detail">내용</label>
-			  <textarea class="form-control" rows="5" id="detail" name="detail">${detail.detail}</textarea>
+				<label for="reg_date">수정일</label> <input type="text"
+					value="${detail.upt_date}" class="form-control" id="upt_date">
 			</div>
-			
-			<button type="submit" class="btn btn-primary">수정하기</button>
-			<button type="submit" class="btn btn-warning">삭제하기</button>
+
+			<div class="form-group">
+				<label for="detail">내용</label>
+				<textarea class="form-control" rows="5" id="detail" name="detail">${detail.detail}</textarea>
+			</div>
+
+			<button type="button" class="btn btn-primary" id="uptBtn">수정하기</button>
+			<button type="button" class="btn btn-warning" id="delBtn">삭제하기</button>
 		</form>
 	</div>
 

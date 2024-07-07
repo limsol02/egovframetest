@@ -11,4 +11,6 @@ public interface BoardMapper {
     List<BoardVO> selectBoard() throws Exception;
     BoardVO selectBoardById(String board_id) throws Exception;
     int uptBoard(BoardVO vo) throws Exception;
+    int insBoard(BoardVO vo) throws Exception;
+    int delBoard(String board_id) throws Exception;
 }

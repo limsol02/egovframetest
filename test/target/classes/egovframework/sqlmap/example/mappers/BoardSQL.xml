@@ -3,17 +3,28 @@
 <mapper namespace="egovframework.example.sample.service.impl.BoardMapper">
     
     <select id="selectBoard" resultType="board">
-        select * from board order by board_id
+        select * from board ORDER BY REG_DATE DESC
     </select>
+    
     <select id="selectBoardById" resultType="board" parameterType="String">
     	select * from board where board_id = #{board_id}
     </select>
-    <update id="uptBoard" parameterType="board">
-		update board 
-			set title = #{title},    
-				detail = #{detail},
-				upt_date = sysdate
-			where board_id = #{board_id}
+    
+     <update id="uptBoard" parameterType="board">
+        update board 
+        set title = #{title}, 
+            detail = #{detail}, 
+            upt_date = sysdate 
+        where board_id = #{board_id}
     </update>
+    
+    <insert id="insBoard" parameterType="board">
+    	INSERT INTO board (board_id, title, detail, writter, reg_date, upt_date) 
+		VALUES ('B00'||board_seq.nextval, #{title}, #{detail}, #{writter}, sysdate , NULL)
+    </insert>
+    
+    <delete id="delBoard" parameterType="String">
+    	delete from board where board_id = #{board_id}
+    </delete>
 
 </mapper>
