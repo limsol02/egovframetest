@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.example.sample.service.BoardService;
 import egovframework.example.sample.service.BoardVO;
+import egovframework.example.sample.service.FileStorage;
 
 @Service("boardService")
 public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardService {
@@ -42,5 +43,15 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	@Override
 	public int delBoard(String board_id) throws Exception {
 		return dao.delBoard(board_id);
+	}
+	
+	@Override
+	public int insFile(FileStorage file) throws Exception {
+		return dao.insFile(file);
+	}
+	
+	@Override
+	public FileStorage fileWithboard(String board_id) throws Exception {
+		return dao.fileWithboard(board_id);
 	}
 }

@@ -28,6 +28,15 @@
 				alert("수정 취소")
 			}
 		});
+		
+		var filename = $("#file").val();
+		if(filename!=""){
+			$("#file").click(function(){
+				download(filename)
+			})
+		}else{
+			return "";
+		}
 	});
 	// 수정 함수
 	function uptData() {
@@ -75,6 +84,10 @@
 			}
 		})
 	}
+	
+	function download (fname){
+		location.href = "${path}/test/download.do?fileName="+fname;
+	}
 </script>
 <body>
 	<!-- 게시판 상세 -->
@@ -110,12 +123,16 @@
 				<label for="detail">내용</label>
 				<textarea class="form-control" rows="5" id="detail" name="detail">${detail.detail}</textarea>
 			</div>
+			
+			 <div class="form-group">
+                <label for="file">파일</label>
+                <input type="text" class="form-control" id="file" 
+                 value="${file.fname}" name="file" readonly>
+            </div>
 
 			<button type="button" class="btn btn-primary" id="uptBtn">수정하기</button>
 			<button type="button" class="btn btn-warning" id="delBtn">삭제하기</button>
 		</form>
 	</div>
-
-
 </body>
 </html>

@@ -9,5 +9,6 @@
 
 <body>
     <spring:message code='fail.common.msg' />
+   
 </body>
 </html>

@@ -23,8 +23,16 @@
 		VALUES ('B00'||board_seq.nextval, #{title}, #{detail}, #{writter}, sysdate , NULL)
     </insert>
     
+    <insert id="insFile" parameterType="file">
+    	insert into FileStorage (file_id, fname, path, board_id)
+    	 values('F00'||file_seq.nextval, #{fname}, #{path}, 'B00'||board_seq.currval)
+    </insert>
+    
     <delete id="delBoard" parameterType="String">
     	delete from board where board_id = #{board_id}
     </delete>
-
+	
+	<select id="fileWithboard" parameterType="String" resultType="file">
+		select * from filestorage where board_id = #{board_id}
+	</select>
 </mapper>
