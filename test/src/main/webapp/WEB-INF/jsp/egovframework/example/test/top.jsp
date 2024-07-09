@@ -39,7 +39,7 @@
           <a class="nav-link" href="${path}/board.do">게시판</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">뉴스레터</a>
+          <a class="nav-link" href="${path}/newsList.do">뉴스레터</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">메일</a>

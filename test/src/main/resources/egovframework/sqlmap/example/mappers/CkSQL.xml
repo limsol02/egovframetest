@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.sample.service.impl.CkMapper">
+    <resultMap id="news" type="HashMap">
+    	<result property="news_id" column="news_id" />
+    	<result property="title" column="title" />
+    	<result property="writter" column="writter" />
+    	<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String"/>
+    	<result property="reg_date" column="reg_date" />
+    	<result property="upt_date" column="upt_date" />
+    </resultMap>
+    
+    <insert id="insNews" parameterType="newsletter">
+    	insert into newsletter(news_id, title, writter, content, reg_date, upt_date) 
+    		values ('N00'||news_seq.nextval, #{title}, #{writter}, #{content,jdbcType=CLOB}, sysdate, null)
+    </insert>
+  	
+  	<select id="newsList" resultMap="news">
+  		select * from newsletter
+  	</select>
+  	
+  	<select id="newsBynewsId" resultType="newsletter" parameterType="String">
+		 SELECT news_id, title, writter, content, reg_date, upt_date
+		        FROM newsletter
+		        WHERE news_id = #{news_id}  	
+    </select>
+</mapper>

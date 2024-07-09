@@ -10,29 +10,75 @@
   <meta charset="UTF-8">
   <title>Main Page</title>
   <!-- CKEditor JavaScript 파일 로드 -->
-  <script src="<%= request.getContextPath() %>/html/egovframework/com/cmm/utl/ckeditor/ckeditor.js"></script>
+  <script src="<%= request.getContextPath() %>/html/ckeditor/ckeditor.js"></script>
+  <script src="<%= request.getContextPath() %>/html/ckeditor/config.js"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/full-all/plugins/exportpdf/plugin.js"></script>
 
-<style>
-.ckeditor-custom {
-    width: 80%;
-    height: 100%;
-    margin-top: 
-}
-</style>
+  <style>
+  .ckeditor-custom {
+      width: 100%;
+      height: 700px;
+      margin-top: 10px;
+  }
+  </style>
 </head>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#insBtn").click(function(){
+			var title = $("#title").val();
+			var writter = $("#writter").val();
+			var content = $("#content").val();
+			  $("#frm").submit();
+			/*  if (title !== "" && writter !== "" && content !== "") {
+	             alert("등록되었습니다.");
+	             $("#frm").submit();
+	         } else {
+	             alert("모든 필드를 채워주세요.");
+	         } */
+		})
+	})
+</script>
 <body>
-    <h1>CKEditor</h1>
-    
-    <tr><th>내용</th>
-		<td><textarea id="content" name=""></textarea>
-		<script type="text/javascript">	// 글쓰기 editor 및 사진 업로드 기능
-			CKEDITOR.replace('content')
-			//,{filebrowserUploadUrl:'/food/imageUpload.do'
-			//});
-		</script></td>
-	</tr>
-    
+    <div class="container" style="margin: 2%; width: 100%; max-width: 95%;">
+        <h2>뉴스레터 등록</h2>
+        <form id="frm" method="post" enctype="multipart/form-data" action="${path}/test/insNews.do">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="writter">작성자</label>
+                <input type="text" class="form-control" id="writter" name="writter">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control ckeditor-custom" id="content" name="content" ></textarea>
+            </div>
+            <button type="button" id="insBtn" class="btn btn-primary" style="margin-top: 2%;">등록하기</button>
+        </form>
+    </div>
 
+    <script type="text/javascript">
+        // 링크, 자세히 버튼 없애고 업로드 탭 생성
+        CKEDITOR.on('dialogDefinition', function (ev) {
+            var dialogName = ev.data.name;
+            var dialog = ev.data.definition.dialog;
+            var dialogDefinition = ev.data.definition;
+            if (dialogName == 'image') {
+                dialog.on('show', function (obj) {
+                    this.selectPage('Upload'); // 업로드 탭으로 시작
+                });
+                dialogDefinition.removeContents('advanced'); // 자세히 탭 제거
+                dialogDefinition.removeContents('Link'); // 링크 탭 제거
+            }
+        });
 
+        CKEDITOR.replace('content', {
+            filebrowserUploadUrl: '<%= request.getContextPath() %>/imageUpload.do',
+            //filebrowserUploadMethod: 'form',
+            height: 700, // 원하는 높이 설정 (픽셀 단위)
+            width: '100%' // 원하는 너비 설정 (백분율 또는 픽셀 단위)
+        });
+    </script>
 </body>
 </html>
