@@ -24,4 +24,17 @@
 		        FROM newsletter
 		        WHERE news_id = #{news_id}  	
     </select>
+    
+    <update id="uptNews" parameterType="newsletter">
+    	update newsletter set
+    		title = #{title},
+    		writter = #{writter},
+    		content = #{content,jdbcType=CLOB},
+    		upt_date = sysdate
+    	where news_id = #{news_id}
+    </update>
+    
+    <delete id="delNews" parameterType="String">
+    	delete from newsletter where news_id = #{news_id}
+    </delete>
 </mapper>

@@ -2,12 +2,25 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-    <typeAliases>
-		<typeAlias alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
-		<typeAlias alias="searchVO" type="egovframework.example.sample.service.SampleDefaultVO"/>
-		<typeAlias alias="sampleVO" type="egovframework.example.sample.service.SampleVO"/>
-		<typeAlias alias="board" type="egovframework.example.sample.service.BoardVO"/>
-		<typeAlias alias="file" type="egovframework.example.sample.service.FileStorage"/>
-		<typeAlias alias="newsletter" type="egovframework.example.sample.service.Newsletter"/>
-    </typeAliases>
+	<typeAliases>
+		<typeAlias alias="egovMap"
+			type="org.egovframe.rte.psl.dataaccess.util.EgovMap" />
+		<typeAlias alias="searchVO"
+			type="egovframework.example.sample.service.SampleDefaultVO" />
+		<typeAlias alias="sampleVO"
+			type="egovframework.example.sample.service.SampleVO" />
+		<typeAlias alias="board"
+			type="egovframework.example.sample.service.BoardVO" />
+		<typeAlias alias="file"
+			type="egovframework.example.sample.service.FileStorage" />
+		<typeAlias alias="newsletter"
+			type="egovframework.example.sample.service.Newsletter" />
+	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler javaType="java.lang.String" jdbcType="CLOB"
+			handler="org.apache.ibatis.type.ClobTypeHandler" />
+	</typeHandlers>
+
 </configuration>
+

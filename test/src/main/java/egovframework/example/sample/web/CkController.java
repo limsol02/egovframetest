@@ -135,4 +135,24 @@ public class CkController {
             return "redirect:/newsList.do";
         }
     }
+    
+   // 뉴스레터 수정
+    @RequestMapping(value = "uptNews.do", method = RequestMethod.POST)
+    public ResponseEntity<?> uptNews(Newsletter upt) throws Exception{
+        System.out.println("Content: " + upt.getContent()); // content 출력
+        int uptResult = 0;
+        try {
+            uptResult = service.uptNews(upt);
+            return ResponseEntity.ok(uptResult);
+        } catch(Exception e) {
+            System.out.println("수정에러 : " + e.getMessage());
+            return ResponseEntity.ok(service.uptNews(upt));
+        }
+    }
+    
+    // 뉴스레터 삭제
+    @RequestMapping(value="delNews.do", method = RequestMethod.GET)
+    public ResponseEntity<?> delNews(@RequestParam("news_id")String news_id) throws Exception{
+    	return ResponseEntity.ok(service.delNews(news_id));
+    }
 }

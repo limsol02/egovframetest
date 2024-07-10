@@ -22,10 +22,80 @@
   }
   </style>
 </head>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#uptBtn").click(function(){
+        if (confirm("수정하시겠습니까?")) {
+            uptData();
+        } else {
+            alert("수정 취소");
+        }
+    });
+    
+    $("#delBtn").click(function(){
+    	if(confirm("삭제하시겠습니까?")){
+    		 delData();
+    	}else{
+    		alert("삭제 취소하셨습니다.");
+    	}
+    })
+});
+
+// 수정함수
+function uptData(){
+	var formData = new FormData();
+	formData.append('news_id', $("#news_id").val());
+	formData.append('title', $("#title").val());
+	formData.append('writter', $("#writter").val());
+	formData.append('content', CKEDITOR.instances.content.getData());
+    $.ajax({
+        url : "${path}/test/uptNews.do",
+        type : "post",
+        data : formData,
+        //dataType : json,
+        cache : false,
+        contentType : false,
+        processData : false,
+        success : function(response) {
+            if (response == 1) {
+                alert("수정 완료");
+                location.href = "${path}/test/newsList.do";
+            } else {
+                alert("수정 에러");
+            }
+        },
+        error : function(err) {
+            console.error("수정 실패:", err);
+            alert("수정 중 오류가 발생했습니다.");
+        }
+    });
+}
+
+// 삭제함수
+function delData(){
+	$.ajax({
+		url : "${path}/test/delNews.do?news_id="+$("#news_id").val(),
+		dataType : "json",
+		type: "get",
+		success : function(res){
+			if(res==1){
+				alert("삭제 성공")
+				location.href = "${path}/test/newsList.do";
+			}else{
+				alert("삭제 실패")
+			}
+		},
+		error : function(err){
+			console.log(err)
+		}
+	})
+}
+</script>
 <body>
     <div class="container" style="margin: 2%; width: 100%; max-width: 95%;">
         <h2>뉴스레터 상세보기</h2>
         <form id="frm" method="post" enctype="multipart/form-data" >
+        	<input type="hidden" name="news_id" id="news_id" value="${news.news_id}">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title" value="${news.title}">
@@ -35,10 +105,20 @@
                 <input type="text" class="form-control" id="writter" name="writter" value="${news.writter}">
             </div>
             <div class="form-group">
+                <label for="writter">등록일</label>
+                <input type="text" class="form-control" id="reg_date" name="reg_date" value="${news.reg_date}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="writter">수정일</label>
+                <input type="text" class="form-control" id="upt_date" name="upt_date" value="${news.upt_date}" readonly>
+            </div>
+            <div class="form-group">
                 <label for="content">내용</label>
                 <textarea class="form-control ckeditor-custom" id="content" name="content">${news.content}</textarea>
             </div>
-            <button type="button" id="insBtn" class="btn btn-primary" style="margin-top: 2%;">등록하기</button>
+          <button type="button" class="btn btn-primary" id="uptBtn">수정하기</button>
+			<button type="button" class="btn btn-warning" id="delBtn">삭제하기</button>
+			<button type="button" class="btn btn-warning" id="sol">내용</button>
         </form>
     </div>
 

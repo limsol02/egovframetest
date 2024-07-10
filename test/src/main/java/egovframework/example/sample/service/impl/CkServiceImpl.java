@@ -28,5 +28,12 @@ public class CkServiceImpl extends EgovAbstractServiceImpl implements CkService{
 	public Newsletter newsBynewsId(String news_id) throws Exception {
 		return dao.newsBynewsId(news_id);
 	}
-
+	@Override
+	public int uptNews(Newsletter upt) throws Exception {
+		return dao.uptNews(upt);
+	}
+	@Override
+	public int delNews(String news_id) throws Exception {
+		return dao.delNews(news_id);
+	}
 }
