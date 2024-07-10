@@ -34,7 +34,7 @@
     	where news_id = #{news_id}
     </update>
     
-    <delete id="delNews" parameterType="String">
-    	delete from newsletter where news_id = #{news_id}
+    <delete id="delNews">
+    	delete from newsletter where news_id = #{}
     </delete>
 </mapper>

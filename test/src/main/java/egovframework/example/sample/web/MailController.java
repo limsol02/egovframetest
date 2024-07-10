@@ -11,24 +11,33 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import egovframework.example.sample.service.Mail;
+import egovframework.example.sample.service.MailService;
 
 @Controller
 public class MailController {
 	
 	@Resource(name="mailSender")
 	private JavaMailSender mailSender;
+	@Resource(name="mailService")
+	private MailService service;
 	
-	 @RequestMapping(value = "emailCheck.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="mail.do",method = RequestMethod.GET)
+	public String mail () {
+		return "test/sendMail";
+	}
+	
+	 @RequestMapping(value = "sendMail.do", method = RequestMethod.POST)
 	    @ResponseBody
-	    public void mailSending( HttpServletResponse res) {
+	    public void mailSending(Mail ins, HttpServletResponse res) {
 	        //System.out.println(email);
 	        String setfrom = "ghdwjdgh89@gmail.com"; // 본인의 이메일 주소
 
-	        String tomail = "yesshol@naver.com"; // 받는 사람 이메일
-	        String title = "꿈꾸는 책다방 서비스 이메일 인증입니다.";
-	        String content = "테스트 메일";
+	        String tomail = ins.getReceiver(); // 받는 사람 이메일
+	        String title = ins.getTitle();
+	        String content = ins.getContent();
 
 	        try {
 	            res.setContentType("text/html;charset=UTF-8");
@@ -37,7 +46,7 @@ public class MailController {
 	            MimeMessage message = mailSender.createMimeMessage();
 	            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 
-	            messageHelper.setFrom(setfrom, "꿈꾸는 책다방");
+	            messageHelper.setFrom(setfrom, "임솔");
 	            messageHelper.setTo(tomail);
 	            messageHelper.setSubject(title);
 	            messageHelper.setText(content);
@@ -50,4 +59,6 @@ public class MailController {
 	            System.out.println(e.getMessage());
 	        }
 	    }
+	 
+	
 }

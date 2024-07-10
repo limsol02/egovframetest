@@ -9,8 +9,6 @@
 		<property name="port" value="587" />
 		<property name="username" value="ghdwjdgh89@gmail.com" />
 		<property name="password" value="mtup nyag qtny nofx" />
-
-
 	<!-- email 요청시는 SMTP -->
 		<property name="javaMailProperties">
 			<props>
