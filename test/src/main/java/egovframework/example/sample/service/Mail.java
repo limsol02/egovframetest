@@ -6,17 +6,17 @@ public class Mail {
 	private String title;
 	private String content;
 	private String send_date;
-	private String path;
+	private FileStorage filestorage;
+	
 	public Mail() {
 	}
-	public Mail(String mail_id, String receiver, String title, String content, String send_date, String path) {
+	public Mail(String mail_id, String receiver, String title, String content, String send_date) {
 		super();
 		this.mail_id = mail_id;
 		this.receiver = receiver;
 		this.title = title;
 		this.content = content;
 		this.send_date = send_date;
-		this.path = path;
 	}
 	public String getMail_id() {
 		return mail_id;
@@ -48,11 +48,12 @@ public class Mail {
 	public void setSend_date(String send_date) {
 		this.send_date = send_date;
 	}
-	public String getPath() {
-		return path;
+	
+	public FileStorage getFilestorage() {
+		return filestorage;
 	}
-	public void setPath(String path) {
-		this.path = path;
+	public void setFilestorage(FileStorage filestorage) {
+		this.filestorage = filestorage;
 	}
 	
 }

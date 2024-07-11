@@ -45,6 +45,12 @@
 	</repositories>
 
 	<dependencies>
+	<!-- html제거 전송 -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.13.1</version>
+		</dependency>
 		<!-- 메일 라이브러리 -->
 		<!-- JavaMail API -->
 		<dependency>

@@ -5,14 +5,14 @@ public class FileStorage {
 	private String fname;
 	private String path;
 	private String board_id;
-	
+	private String mail_id;
 	
 	
 	public FileStorage(String fname, String path) {
 		super();
 		this.fname = fname;
 		this.path = path;
-	}
+		}
 	public FileStorage() {
 		// TODO Auto-generated constructor stub
 	}
@@ -39,6 +39,12 @@ public class FileStorage {
 	}
 	public void setBoard_id(String board_id) {
 		this.board_id = board_id;
+	}
+	public String getMail_id() {
+		return mail_id;
+	}
+	public void setMail_id(String mail_id) {
+		this.mail_id = mail_id;
 	}
 	
 	

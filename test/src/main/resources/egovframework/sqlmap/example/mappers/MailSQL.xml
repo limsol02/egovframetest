@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.example.sample.service.impl.MailMapper">
-  
-    
-    <insert id="insMail" parameterType="mail">
-    	insert into mail(mail_id, receiver, title, content, send_date) 
-    		values ('M00'||mail_seq.nextval, #{receiver}, #{title}, #{content,jdbcType=CLOB}, sysdate)
-    </insert>
-  	<insert id="insFileWithMail" parameterType="file">
-    	insert into FileStorage (file_id, fname, path, board_id)
-    	 values('F00'||file_seq.nextval, #{fname}, #{path}, 'M00'||mail_seq.currval)
-    </insert>
-  
+<mapper
+	namespace="egovframework.example.sample.service.impl.MailMapper">
+
+	<resultMap id="MailResultMap" type="mail">
+		<id property="mail_id" column="mail_id" />
+		<result property="receiver" column="receiver" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="send_date" column="send_date" />
+		<association property="filestorage" javaType="file">
+			<id property="file_id" column="file_id" />
+			<result property="fname" column="fname" />
+			<result property="path" column="path" />
+			<result property="board_id" column="board_id" />
+			<result property="mail_id" column="file_mail_id" />
+		</association>
+	</resultMap>
+
+	<insert id="insMail" parameterType="mail">
+		insert into mail(mail_id,
+		receiver, title, content, send_date)
+		values ('M00'||mail_seq.nextval,
+		#{receiver}, #{title},
+		#{content,jdbcType=CLOB}, sysdate)
+	</insert>
+
+	<insert id="insFileWithMail" parameterType="file">
+		insert into
+		FileStorage (file_id, fname, path, board_id, mail_id)
+		values('F00'||file_seq.nextval, #{fname}, #{path},null,
+		'M00'||mail_seq.currval)
+	</insert>
+
+	<select id="mailList" resultType="mail">
+		select * from mail
+	</select>
+
+	<select id="mailDetail" parameterType="String"
+		resultMap="MailResultMap">
+		SELECT m.mail_id, m.receiver, m.title, m.content, m.send_date,
+		f.file_id, f.fname, f.path, f.board_id, f.mail_id AS file_mail_id
+		FROM mail m
+		LEFT JOIN filestorage f ON m.mail_id = f.mail_id
+		WHERE m.mail_id = #{mail_id}
+	</select>
+
 </mapper>

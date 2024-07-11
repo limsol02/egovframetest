@@ -42,7 +42,7 @@
           <a class="nav-link" href="${path}/newsList.do">뉴스레터</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="${path}/mail.do">메일</a>
+          <a class="nav-link" href="${path}/mailList.do">메일</a>
         </li>        
       </ul>
     </div>  

@@ -25,14 +25,21 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#insBtn").click(function(){
-            var formData = new FormData(form);
+        	 //event.preventDefault(); 
+        	
+            var formData = new FormData();
             formData.append('receiver', $("#receiver").val());
             formData.append('title', $("#title").val());
-            formData.append('files', $("#files").val());
             formData.append('content', CKEDITOR.instances.content.getData());
-
+         // 파일이 선택되지 않은 경우에 대한 처리 추가
+            var files = $("#files")[0].files;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    formData.append('files', files[i]);
+                }
+            }
             $.ajax({
-                url: '${path}/sendMail.do',
+                url: '${path}/test/sendMail.do',
                 type: 'POST',
                 data: formData,
                 processData: false,

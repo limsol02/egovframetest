@@ -35,6 +35,6 @@
     </update>
     
     <delete id="delNews">
-    	delete from newsletter where news_id = #{}
+    	delete from newsletter where news_id = #{news_id}
     </delete>
 </mapper>
