@@ -83,5 +83,8 @@ public class MailServiceImpl extends EgovAbstractServiceImpl implements MailServ
 	public Mail mailDetail(String mail_id) throws Exception {
 		return dao.mailDetail(mail_id);
 	}
-	
+	@Override
+	public int delMail(String mail_id) throws Exception {
+		return dao.delMail(mail_id);
+	}
 }

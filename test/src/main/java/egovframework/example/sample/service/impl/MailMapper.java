@@ -13,4 +13,5 @@ public interface MailMapper {
 	int insFileWithMail(FileStorage ins) throws Exception;
 	List<Mail> mailList() throws Exception;
 	Mail mailDetail(String mail_id) throws Exception;
+	int delMail(String mail_id) throws Exception;
 }

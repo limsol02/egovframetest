@@ -9,4 +9,6 @@ public interface MailService {
 	int insFileWithMail(FileStorage ins, Mail insMail,MultipartFile[] files) throws Exception;
 	List<Mail> mailList() throws Exception;
 	Mail mailDetail(String mail_id) throws Exception;
+	int delMail(String mail_id) throws  Exception;
+
 }

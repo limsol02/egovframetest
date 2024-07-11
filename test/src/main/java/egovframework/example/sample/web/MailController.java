@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -92,4 +93,16 @@ public class MailController {
 		  d.addAttribute("detail",service.mailDetail(mail_id));
 		  return "test/mailDetail";
 	  }
+	  
+	  @RequestMapping(value="delMail.do", method = RequestMethod.GET)
+	  public ResponseEntity<?> delMail(@RequestParam("mail_id")String mail_id) throws Exception{
+		  
+		  try {
+			  return ResponseEntity.ok(service.delMail(mail_id));
+		  }catch (Exception e) {
+			  System.out.println(e.getMessage());
+			  return ResponseEntity.ok(e.getMessage());
+		  }
+		  
+	  }  
 }

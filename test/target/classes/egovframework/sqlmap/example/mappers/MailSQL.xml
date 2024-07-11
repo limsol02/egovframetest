@@ -45,5 +45,9 @@
 		LEFT JOIN filestorage f ON m.mail_id = f.mail_id
 		WHERE m.mail_id = #{mail_id}
 	</select>
+	
+	<delete id="delMail" parameterType="String">
+		delete from mail where mail_id = #{mail_id}
+	</delete>
 
 </mapper>
