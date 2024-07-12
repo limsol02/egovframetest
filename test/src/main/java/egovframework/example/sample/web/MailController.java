@@ -38,7 +38,7 @@ public class MailController {
 	  @RequestMapping(value = "sendMail.do", method = RequestMethod.POST)
 	    @ResponseBody
 	    public void mailSending(Mail ins, HttpServletResponse res, MultipartFile[] files) {
-	        String setfrom = "ghdwjdgh89@gmail.com"; // 본인의 이메일 주소
+	        String setfrom = "ghdwjdgh89@gmail.com"; // 보내는 이메일 주소
 	        String tomail = ins.getReceiver(); // 받는 사람 이메일
 	        String title = ins.getTitle(); // 메일 제목
 	        String content = ins.getContent(); // 메일 내용

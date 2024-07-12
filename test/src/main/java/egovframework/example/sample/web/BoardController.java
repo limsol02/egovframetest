@@ -35,12 +35,13 @@ public class BoardController {
 	@Value("${file.upload.path}")
 	private String uploadPath;
 
+
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main() {
-		System.out.println("업로드 경로 : " + uploadPath);
 		return "test/main";
 	}
-
+	
+	
 	@RequestMapping(value = "board.do")
 	public String board(Model d) throws Exception {
 		List<BoardVO> board = service.selectBoard();
